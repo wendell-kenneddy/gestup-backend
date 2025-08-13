@@ -23,9 +23,6 @@ public class Product {
     private String id;
 
     @Column(nullable = false)
-    private String userId;
-
-    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
@@ -47,8 +44,11 @@ public class Product {
     protected Product() {
     }
 
-    public Product(String userId, String name, String description, double price) {
-        this.userId = userId;
+    public Product(String id) {
+        this.id = id;
+    }
+
+    public Product(String name, String description, double price) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -74,12 +74,16 @@ public class Product {
         return this.description;
     }
 
-    public void setDescrition(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
     public double getPrice() {
-        return this.getPrice();
+        return this.price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public User getUser() {
@@ -88,22 +92,6 @@ public class Product {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public Instant getCreatedAt() {
