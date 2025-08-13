@@ -16,7 +16,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "custmoers")
+@Table(name = "customers")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -25,15 +25,15 @@ public class Customer {
     @Column(nullable = false)
     private String name;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @CreationTimestamp
     private Instant createdAt;
 
     @UpdateTimestamp
     private Instant updatedAt;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
 
     protected Customer() {
     }
@@ -50,7 +50,7 @@ public class Customer {
         this.id = id;
     }
 
-    public String getNam() {
+    public String getName() {
         return this.name;
     }
 
@@ -64,10 +64,6 @@ public class Customer {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public Instant getCreatedAt() {
