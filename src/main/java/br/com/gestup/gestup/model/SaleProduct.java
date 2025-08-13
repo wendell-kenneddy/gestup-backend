@@ -5,6 +5,7 @@ import java.time.Instant;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -50,6 +51,12 @@ public class SaleProduct {
         this.discountPercentage = discountPercentage;
     }
 
+    public SaleProduct(int quantity, double discountPercentage, Product product) {
+        this.quantity = quantity;
+        this.discountPercentage = discountPercentage;
+        this.product = product;
+    }
+
     public String getId() {
         return id;
     }
@@ -59,7 +66,7 @@ public class SaleProduct {
     }
 
     public Product getProduct() {
-        return product;
+        return this.product;
     }
 
     public void setProduct(Product product) {
@@ -83,7 +90,7 @@ public class SaleProduct {
     }
 
     public double getDiscountPercentage() {
-        return discountPercentage;
+        return this.discountPercentage;
     }
 
     public void setDiscountPercentage(double discountPercentage) {
