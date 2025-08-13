@@ -1,6 +1,10 @@
 package br.com.gestup.gestup.dto;
 
-import java.util.Collection;
+import java.util.List;
 
-public record SaleDTO(String id, String customerId, Collection<SaleProductDTO> saleProducts) {
+public record SaleDTO(
+        String id,
+        CustomerDTO customer,
+        PaymentMethodDTO paymentMethod,
+        List<SaleProductDTO> saleProducts) {
 }
