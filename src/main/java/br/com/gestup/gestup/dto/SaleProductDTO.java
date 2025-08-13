@@ -1,4 +1,4 @@
 package br.com.gestup.gestup.dto;
 
-public record SaleProductDTO(String id, String productId, double price, int quantity, double discountPercentage) {
+public record SaleProductDTO(String id, ProductDTO product, int quantity, double discountPercentage) {
 }
