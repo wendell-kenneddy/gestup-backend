@@ -1,10 +1,12 @@
 package br.com.gestup.gestup.model;
 
 import java.time.Instant;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -12,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,13 +28,16 @@ public class Sale {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "payment_method_id")
     private PaymentMethod paymentMethod;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "sale", cascade = CascadeType.ALL)
+    private List<SaleProduct> saleProducts;
 
     @CreationTimestamp
     private Instant createdAt;
@@ -39,7 +45,18 @@ public class Sale {
     @UpdateTimestamp
     private Instant updatedAt;
 
-    public Sale() {
+    protected Sale() {
+    }
+
+    public Sale(Customer customer, PaymentMethod paymentMethod) {
+        this.customer = customer;
+        this.paymentMethod = paymentMethod;
+    }
+
+    public Sale(User user, Customer customer, PaymentMethod paymentMethod) {
+        this.user = user;
+        this.customer = customer;
+        this.paymentMethod = paymentMethod;
     }
 
     public String getId() {
@@ -72,6 +89,14 @@ public class Sale {
 
     public void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+    public List<SaleProduct> getSaleProducts() {
+        return this.saleProducts;
+    }
+
+    public void setSaleProducts(List<SaleProduct> saleProducts) {
+        this.saleProducts = saleProducts;
     }
 
     public Instant getCreatedAt() {
